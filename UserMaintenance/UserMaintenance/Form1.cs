@@ -33,7 +33,7 @@ namespace UserMaintenance
         {
             var u = new User()
             {
-                FullName = textBox1.Text,
+                FullName = textBox1.Text
 
             };
             users.Add(u);
@@ -53,6 +53,6 @@ namespace UserMaintenance
 
         }
 
-
+       
     }
 }
