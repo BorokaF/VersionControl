@@ -22,6 +22,7 @@ namespace UserMaintenance.Entities
                     LastName,
                     FirstName);
             }
+        }
 
         }
     }
