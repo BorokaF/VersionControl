@@ -119,6 +119,25 @@
     <None Include="Connected Services\MnbServiceReference\_6.het.MnbServiceReference.GetInfoResponseBody.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Properties\DataSources\Form1.datasource" />
+    <None Include="Properties\DataSources\Program.datasource" />
+    <None Include="Properties\DataSources\_6.het.MnbServiceReference.GetCurrenciesRequest.datasource" />
+    <None Include="Properties\DataSources\_6.het.MnbServiceReference.GetCurrenciesRequestBody.datasource" />
+    <None Include="Properties\DataSources\_6.het.MnbServiceReference.GetCurrencyUnitsRequest.datasource" />
+    <None Include="Properties\DataSources\_6.het.MnbServiceReference.GetCurrencyUnitsRequestBody.datasource" />
+    <None Include="Properties\DataSources\_6.het.MnbServiceReference.GetCurrentExchangeRatesRequest.datasource" />
+    <None Include="Properties\DataSources\_6.het.MnbServiceReference.GetCurrentExchangeRatesRequestBody.datasource" />
+    <None Include="Properties\DataSources\_6.het.MnbServiceReference.GetDateIntervalRequest.datasource" />
+    <None Include="Properties\DataSources\_6.het.MnbServiceReference.GetDateIntervalRequestBody.datasource" />
+    <None Include="Properties\DataSources\_6.het.MnbServiceReference.GetExchangeRatesRequest.datasource" />
+    <None Include="Properties\DataSources\_6.het.MnbServiceReference.GetExchangeRatesRequestBody.datasource" />
+    <None Include="Properties\DataSources\_6.het.MnbServiceReference.GetInfoRequest.datasource" />
+    <None Include="Properties\DataSources\_6.het.MnbServiceReference.GetInfoRequestBody.datasource" />
+    <None Include="Properties\DataSources\_6.het.MnbServiceReference.MNBArfolyamServiceSoap.datasource" />
+    <None Include="Properties\DataSources\_6.het.MnbServiceReference.MNBArfolyamServiceSoapChannel.datasource" />
+    <None Include="Properties\DataSources\_6.het.MnbServiceReference.MNBArfolyamServiceSoapClient.datasource" />
+    <None Include="Properties\DataSources\_6.het.Properties.Resources.datasource" />
+    <None Include="Properties\DataSources\_6.het.Properties.Settings.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
