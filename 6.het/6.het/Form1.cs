@@ -1,4 +1,5 @@
-﻿using _6.het.MnbServiceReference;
+﻿using _6.het.Entities;
+using _6.het.MnbServiceReference;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,9 +14,12 @@ namespace _6.het
 {
     public partial class Form1 : Form
     {
-       
+        BindingList<RateData> Rates = new BindingList<RateData>();
+
         public Form1()
         {
+            dataGridView1.DataSource = Rates;
+
             var mnbService = new MNBArfolyamServiceSoapClient();
 
             var request = new GetExchangeRatesRequestBody()
@@ -31,6 +35,11 @@ namespace _6.het
             var result = response.GetExchangeRatesResult;
 
            InitializeComponent();
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
         }
     }
