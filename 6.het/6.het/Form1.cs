@@ -16,22 +16,25 @@ namespace _6.het
 {
     public partial class Form1 : Form
     {
-      BindingList<RateData> Rates = new BindingList<RateData>();
-        
+      BindingList<string> Currencies = new BindingList<string>();
+
+        BindingList<RateData> Rates = new BindingList<RateData>();
         public Form1()
         {
+            InitializeComponent();
+            
             RefreshData();
             
-            InitializeComponent();
+            
 
         }
 
         private void RefreshData()
         {
             Rates.Clear();
-          
-          
 
+
+            //dataGridView1.DataSource = Rates; 
 
             var mnbService = new MNBArfolyamServiceSoapClient();
 
@@ -116,6 +119,7 @@ namespace _6.het
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             RefreshData();
+            comboBox1.DataSource = Currencies;
         }
     }
 }
