@@ -30,7 +30,7 @@ namespace _6.het
 
             var result = response.GetExchangeRatesResult;
 
-           // InitializeComponent();
+           InitializeComponent();
 
         }
     }
