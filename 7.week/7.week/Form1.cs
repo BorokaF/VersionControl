@@ -15,7 +15,7 @@ namespace _7.week
     public partial class Form1 : Form
     {
         Random rng = new Random(1234);
-
+        Dictionary<int, Tuple<int, int>> Data = new Dictionary<int, Tuple<int, int>>();
         List<Person> Population = new List<Person>();
         List<BirthProbability> BirthProbabilities = new List<BirthProbability>();
         List<DeathProbability> DeathProbabilities = new List<DeathProbability>();
@@ -29,6 +29,18 @@ namespace _7.week
 
            
 
+        }
+        private void LoadData(string fileName = null, bool debug = false)
+        {
+            if (fileName == null && debug)
+                Population = GetPopulation(@"C:\Temp\nép-teszt.csv");
+            else if (fileName == null)
+                Population = GetPopulation(@"C:\Temp\nép.csv");
+            else
+                Population = GetPopulation(fileName);
+
+            BirthProbabilities = GetBirthProbabilities(@"C:\Temp\születés.csv");
+            DeathProbabilities = GetDeathProbabilities(@"C:\Temp\halál.csv");
         }
         private void SimStep(int year, Person person)
         {
@@ -130,7 +142,65 @@ namespace _7.week
             return population;
         }
 
+        private void Simulate(int endDate)
+        {
+            for (int year = 2005; year <= 2024; year++)
+            {
+               
+                for (int i = 0; i < Population.Count; i++)
+                {
+                    SimStep(year, Population[i]);
+                }
 
+                int nbrOfMales = (from x in Population
+                                  where x.Gender == Gender.Male && x.IsAlive
+                                  select x).Count();
+                int nbrOfFemales = (from x in Population
+                                    where x.Gender == Gender.Female && x.IsAlive
+                                    select x).Count();
+                Console.WriteLine(
+                    string.Format("Év:{0} Fiúk:{1} Lányok:{2}", year, nbrOfMales, nbrOfFemales));
+                Data[year] = new Tuple<int, int>(nbrOfMales, nbrOfFemales);
+            }
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.ShowDialog();
+        }
 
+        private void openFileDialog1_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var a = sender as OpenFileDialog;
+            textBox1.Text = a.FileName;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Clear();
+
+            string filePath = textBox1.Text;
+            FileInfo fi = new FileInfo(filePath);
+            if (!fi.Exists)
+                throw new Exception();
+
+            LoadData(filePath, false);
+            Simulate((int)numericUpDown1.Value);
+        }
+
+        private void DisplayResults()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var item in Data)
+            {
+                sb.Append($"Szimulációs év: {item.Key}");
+                sb.Append(Environment.NewLine);
+                sb.Append($"\tFiúk:\t{item.Value.Item1:n0}");
+                sb.Append(Environment.NewLine);
+                sb.Append($"\tLányok:\t{item.Value.Item2:n0}");
+                sb.Append(Environment.NewLine);
+            }
+
+            richTextBox1.Text = sb.ToString();
+        }
     }
 }
