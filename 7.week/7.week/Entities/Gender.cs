@@ -29,16 +29,16 @@ namespace _7.week.Entities
     public class BirthProbability
     {
         public int Age { get; set; }
-        public int NbrOfChildren { get; set; }
-        public double BProb { get; set; }
+        public int NumberbrOfChildren { get; set; }
+        public double P { get; set; }
 
     }
 
     public class DeathProbability
     {
         public int Age { get; set; }
-        public int NbrOfChildren { get; set; }
-        public double DProb { get; set; }
+        public Gender Gender { get; set; }
+        public double P { get; set; }
 
     }
 

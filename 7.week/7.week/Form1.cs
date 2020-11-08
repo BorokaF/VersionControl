@@ -14,7 +14,7 @@ namespace _7.week
 {
     public partial class Form1 : Form
     {
-        Random rng = new Random(1);
+        Random rng = new Random(1234);
 
         List<Person> Population = new List<Person>();
         List<BirthProbability> BirthProbabilities = new List<BirthProbability>();
@@ -44,7 +44,45 @@ namespace _7.week
                 Console.WriteLine(
                     string.Format("Év:{0} Fiúk:{1} Lányok:{2}", year, nbrOfMales, nbrOfFemales));
             }
+
         }
+        private void SimStep(int year, Person person)
+        {
+            //Ha halott akkor kihagyjuk, ugrunk a ciklus következő lépésére
+            if (!person.IsAlive) return;
+
+            // Letároljuk az életkort, hogy ne kelljen mindenhol újraszámolni
+            byte age = (byte)(year - person.BirthYear);
+
+            // Halál kezelése
+            // Halálozási valószínűség kikeresése
+            double pDeath = (from x in DeathProbabilities
+                             where x.Gender == person.Gender && x.Age == age
+                             select x.P).FirstOrDefault();
+            // Meghal a személy?
+            if (rng.NextDouble() <= pDeath)
+                person.IsAlive = false;
+
+            //Születés kezelése - csak az élő nők szülnek
+            if (person.IsAlive && person.Gender == Gender.Female)
+            {
+                //Szülési valószínűség kikeresése
+                double pBirth = (from x in BirthProbabilities
+                                 where x.Age == age
+                                 select x.P).FirstOrDefault();
+                //Születik gyermek?
+                if (rng.NextDouble() <= pBirth)
+                {
+                    Person újszülött = new Person();
+                    újszülött.BirthYear = year;
+                    újszülött.NbrOfChildren = 0;
+                    újszülött.Gender = (Gender)(rng.Next(1, 3));
+                    Population.Add(újszülött);
+                }
+            }
+        }
+
+
         public List<Person> GetPopulation(string csvpath)
         {
             List<Person> population = new List<Person>();
@@ -68,44 +106,44 @@ namespace _7.week
 
         public List<BirthProbability> GetBirthProbabilities(string csvpath)
         {
-            List<BirthProbability> bprob = new List<BirthProbability>();
+            List<BirthProbability> population = new List<BirthProbability>();
 
             using (StreamReader sr = new StreamReader(csvpath, Encoding.Default))
             {
                 while (!sr.EndOfStream)
                 {
-                    var column = sr.ReadLine().Split('\t');
-                    bprob.Add(new BirthProbability()
+                    var line = sr.ReadLine().Split(';');
+                    population.Add(new BirthProbability()
                     {
-                        Age = int.Parse(column[0]),
-                        NbrOfChildren = int.Parse(column[1]),
-                        BProb = double.Parse(column[2])
+                        Age = int.Parse(line[0]),
+                        NumberbrOfChildren = int.Parse(line[1]),
+                        P = double.Parse(line[2])
                     });
                 }
             }
 
-            return bprob;
+            return population;
         }
 
         public List<DeathProbability> GetDeathProbabilities(string csvpath)
         {
-            List<DeathProbability> dprob = new List<DeathProbability>();
+            List<DeathProbability> population = new List<DeathProbability>();
 
             using (StreamReader sr = new StreamReader(csvpath, Encoding.Default))
             {
                 while (!sr.EndOfStream)
                 {
-                    var column = sr.ReadLine().Split('\t');
-                    dprob.Add(new DeathProbability()
+                    var line = sr.ReadLine().Split(';');
+                    population.Add(new DeathProbability()
                     {
-                        Age = int.Parse(column[0]),
-                        NbrOfChildren = int.Parse(column[1]),
-                        DProb = double.Parse(column[2])
+                        Gender = (Gender)Enum.Parse(typeof(Gender), line[0]),
+                        Age = int.Parse(line[1]),
+                        P = double.Parse(line[2])
                     });
                 }
             }
 
-            return dprob;
+            return population;
         }
     }
 }
