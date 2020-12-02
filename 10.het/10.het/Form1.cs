@@ -22,6 +22,8 @@ namespace _10.het
 
             ga = gc.ActivateDisplay();
             this.Controls.Add(ga);
+            //gc.AddPlayer();
+            //gc.Start(true);
         }
     }
 }
