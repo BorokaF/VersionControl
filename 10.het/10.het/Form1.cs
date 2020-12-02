@@ -53,9 +53,12 @@ namespace _10.het
                           select p;
             if (winners.Count() > 0)
             {
+                button1.Visible = true;
                 winnerBrain = winners.FirstOrDefault().Brain.Clone();
                 gc.GameOver -= Gc_GameOver;
+               
                 return;
+
             }
 
             gc.ResetCurrentLevel();
@@ -72,12 +75,29 @@ namespace _10.het
                 else
                     gc.AddPlayer(b.Mutate());
             }
+           
             gc.Start();
-
+            
+            
         }
         
         private void label1_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+             //   button1.Visible = true;
+
+            
+
+            gc.ResetCurrentLevel();
+            gc.AddPlayer(winnerBrain.Clone());
+            gc.AddPlayer();
+            ga.Focus();
+            gc.Start(true);
+            
 
         }
     }
